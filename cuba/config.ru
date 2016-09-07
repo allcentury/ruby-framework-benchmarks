@@ -1,0 +1,2 @@
+require './cuba'
+run Cuba

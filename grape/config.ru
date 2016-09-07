@@ -1,0 +1,2 @@
+require './grape'
+run API

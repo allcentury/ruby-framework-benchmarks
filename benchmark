@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+echo "Working"
+
+function run_server() {
+  bundle exec puma -t 8:16 -w 2 --preload > /dev/null 2>&1 &
+}
+
+function run_bench() {
+  ab -n 10000 -c 100 http://127.0.0.1:9292/
+}
+
+function kill_process_by_id() {
+  kill -9 "$1"
+}
+
+servers=( "cuba" "sinatra" "hanami" "grape" )
+for server in "${servers[@]}"
+do
+  printf "\n\n\n\n"
+  printf "Starting profile for %s\n" "$server"
+  cd "$server" || exit
+  run_server
+  pid=$(echo $!)
+  sleep 5 # let server start up
+  benchmark=$(run_bench)
+  printf "Finished profiling %s\n" "$server"
+  printf "Results:\n"
+  printf "%s\n" "$benchmark"
+  kill_process_by_id "$pid"
+  cd ..
+done
