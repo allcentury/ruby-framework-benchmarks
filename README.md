@@ -5,13 +5,17 @@ Benchmark constants:
 
 - `ab` is run with a concurrency of `100` and a total request size of `10,000`.
 
-- Puma` is run in clustered mode with a worker size of 2 and thread size of 16 min and 16 max.  The worker size is based on the number of available cores you have so feel free to adjust.  I left the thread size fixed in order to prevent any Puma optimizations that I might not be aware of.  We use `preload` in order to take advantage of Copy on Write.
+- `Puma` is run in clustered mode with a worker size of 2 and thread size of 16 min and 16 max.  The worker size is based on the number of available cores you have so feel free to adjust.  I left the thread size fixed in order to prevent any Puma optimizations that I might not be aware of.  We use `preload` in order to take advantage of Copy on Write.
 
-- The app must respond with a simply JSON payload of `{ "test": 123 }` when a GET request is made to the root path (ie http://127.0.0.1/)
+- The app must respond with a simple JSON payload of `{ "test": 123 }` when a GET request is made to the root path (ie http://127.0.0.1/)
 
 ## WARNING
 
-The benchmark script is providing very strange results, I'm still trying to understand why. To test this today, I suggest:
+The benchmark script is providing very strange results, I'm still trying to understand why.
+
+## Usage
+
+Based on the benchmark script having wonky results, I suggest running this yourself as follows:
 
 ```
 cd cuba
@@ -58,4 +62,11 @@ Take the results above with a grain of salt.  I'm still tweaking the set up of t
 
 ## What's next?
 
-I've started to run ruby-prof to identify bottlenecks in each framework and hopefully come up with some optimization strategies for each.
+- I've started to run ruby-prof to identify bottlenecks in each framework and hopefully come up with some optimization strategies for each.
+- Fix benchmark script
+  - Profiling Sinatra in the script is producing strange results, in fact the server crashes after ~6.4k requests.
+  - Auto adjust Puma's cluster size based on machine's cores
+  - Produce a better overview than ab's default output
+  - Call out versions of everything
+- There are a few frameworks I left out such as NYNY, Nancy, etc.  Those looked to be stale and not receiving updates so I punted on them.
+- Rack 2.0 is available in Sinatra and Rails.
