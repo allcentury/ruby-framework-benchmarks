@@ -9,30 +9,53 @@ Benchmark constants:
 
 The app must respond with a simply JSON payload of `{ "test": 123 }` when a GET request is made to the root path (ie http://127.0.0.1/)
 
+## WARNING
+
+The benchmark script is providing very strange results, I'm still trying to understand why. To test this today, I suggest:
+
+```
+cd cuba
+bundle exec puma -t 16:16 -w 2 --preload
+# open new terminal window
+ab -n 10000 -c 100 http://127.0.0.1:9292/
+```
+
 ## Cuba
 
 ```
-Requests per second:    5082.97 [#/sec] (mean)
-Time per request:       19.674 [ms] (mean)
-Time per request:       0.197 [ms] (mean, across all concurrent requests)
+Requests per second:    4058.79 [#/sec] (mean)
+Time per request:       24.638 [ms] (mean)
+Time per request:       0.246 [ms] (mean, across all concurrent requests)
 ```
-
 
 ## Grape
 
 ```
-Requests per second:    355.51 [#/sec] (mean)
-Time per request:       281.283 [ms] (mean)
-Time per request:       2.813 [ms] (mean, across all concurrent requests)
+Requests per second:    3382.01 [#/sec] (mean)
+Time per request:       29.568 [ms] (mean)
+Time per request:       0.296 [ms] (mean, across all concurrent requests)
 ```
 
 ## Sinatra
 
+```
+Requests per second:    2523.10 [#/sec] (mean)
+Time per request:       39.634 [ms] (mean)
+Time per request:       0.396 [ms] (mean, across all concurrent requests)
+```
 
 ## Hanami
 
 ```
-Requests per second:    4642.56 [#/sec] (mean)
-Time per request:       21.540 [ms] (mean)
-Time per request:       0.215 [ms] (mean, across all concurrent requests)
+Requests per second:    4468.30 [#/sec] (mean)
+Time per request:       22.380 [ms] (mean)
+Time per request:       0.224 [ms] (mean, across all concurrent requests)
 ```
+
+## Results
+
+Take the results above with a grain of salt.  I'm still tweaking the set up of these frameworks to hopefully compare apples to apples.  I'm very surprised Sinatra is running at 60% of Cuba or Hanami and I'm looking into other configuration details to speed up Sinatra if possible.
+
+## What's next?
+
+I've started to run ruby-prof to identify bottlenecks in each framework and hopefully come up with some optimization strategies for each.
