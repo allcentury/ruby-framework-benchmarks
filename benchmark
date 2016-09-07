@@ -2,7 +2,7 @@
 echo "Working"
 
 function run_server() {
-  bundle exec puma -t 8:16 -w 2 --preload > /dev/null 2>&1 &
+  bundle exec puma -t 16:16 -w 2 --preload > /dev/null 2>&1 &
 }
 
 function run_bench() {
