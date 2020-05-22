@@ -46,7 +46,7 @@ GEM
     multi_xml (0.5.5)
     mustermann19 (0.4.4)
       enumerable-lazy
-    puma (3.6.0)
+    puma (3.12.6)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -76,7 +76,7 @@ DEPENDENCIES
   cuba (= 3.8.0)
   grape (= 0.17.0)
   hanami-router (= 0.7.0)
-  puma (= 3.6.0)
+  puma (= 3.12.6)
   ruby-prof (= 0.16.2)
   sinatra (= 1.4.7)
 
